@@ -1,5 +1,6 @@
 import json
 import string
+import os
 from typing import List
 
 from cv2 import _OutputArray_DEPTH_MASK_16F
@@ -57,6 +58,14 @@ def transcribePP23D(tJson:json):
         frame = Frame(str(frameCnt), dataReArrange(data))
         frames.append(frame)
     return makeFromatFile(frames)
+
+def departJsonData( datas:json, filepath:string):
+    cnt = -1
+    for data in datas:
+        cnt+=1
+        _out_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), filepath+'/{0}.json'.format(str(cnt)))
+        with open(_out_file, 'w') as outfile:
+            json.dump(data, outfile) 
 
 if __name__ == "__main__":
     tJson = json.load(open("t.json","r"))
